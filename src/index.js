@@ -29,6 +29,7 @@ import { Provider } from 'react-redux'
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
 import SignIn from "views/SignIn/SignIn"
+import SignUp from 'views/SignUp/SignUp2'
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 
 const hist = createBrowserHistory();
@@ -40,6 +41,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/console" component={Admin} />
         <Route exact={true} path="/sign-in" component={SignIn}/>
+        <Route exact={true} path="/sign-up" component={SignUp}/>
         {/* <Route path="/rtl" component={RTL} /> */}
         <Redirect from="/" to="/console/dashboard" />
       </Switch>

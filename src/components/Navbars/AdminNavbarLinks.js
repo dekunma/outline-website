@@ -21,12 +21,18 @@ import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
+import { useSelector, useDispatch } from 'react-redux'
+import { setLogin } from '../../actions'
+
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
+
+  const dispatch = useDispatch()
+
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
@@ -44,9 +50,16 @@ export default function AdminNavbarLinks() {
       setOpenProfile(event.currentTarget);
     }
   };
-  const handleCloseProfile = () => {
-    setOpenProfile(null);
+  const handleCloseSetting = () => {
+    window.location='/console/user'
   };
+
+  const logout = () => {
+    localStorage.clear()
+    dispatch(setLogin(null))
+    setOpenProfile(null)
+    window.location.reload(false)
+  }
   return (
     <div>
       {/* <div className={classes.searchWrapper}>
@@ -108,7 +121,7 @@ export default function AdminNavbarLinks() {
         >
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>Setting</p>
           </Hidden>
         </Button>
         <Poppers
@@ -132,23 +145,17 @@ export default function AdminNavbarLinks() {
               }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={handleCloseProfile}>
+                <ClickAwayListener onClickAway={ev => setOpenProfile(null)}>
                   <MenuList role="menu">
                     <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleCloseSetting}
                       className={classes.dropdownItem}
                     >
                       Settings
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={logout}
                       className={classes.dropdownItem}
                     >
                       Logout

@@ -12,7 +12,7 @@ export default function Primary(props) {
   const { children } = props;
   return (
     <div className={classes.defaultFontStyle + " " + classes.primaryText}>
-      {children}
+      <p>{children}</p>
     </div>
   );
 }

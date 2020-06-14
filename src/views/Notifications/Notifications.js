@@ -293,12 +293,20 @@ export default function Notifications() {
                 </Button>
                 <Snackbar
                   place="bl"
-                  color="info"
+                  color="success"
                   icon={AddAlert}
                   message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
                   open={bl}
                   closeNotification={() => setBL(false)}
                   close
+                />
+                <SnackbarContent
+                  message={
+                    'SUCCESS - This is a regular notification made with color="success"'
+                  }
+                  close
+                  color="success"
+                  open={bl}
                 />
               </GridItem>
               <GridItem xs={12} sm={12} md={4}>
