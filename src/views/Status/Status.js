@@ -59,9 +59,10 @@ export default function Status() {
       singleData.push(s.status)
       singleData.push(s.note)
       serverDataAsArr.push(singleData)
+      return null
     })
     setTableData(serverDataAsArr)
-  },[])
+  },[servers])
 
   return (
     <GridContainer>

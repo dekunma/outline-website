@@ -1,7 +1,6 @@
 import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -9,7 +8,6 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import SnackBar from 'components/Snackbar/Snackbar'
@@ -18,7 +16,6 @@ import CheckIcon from '@material-ui/icons/Check'
 
 import client from '../../feathers'
 
-import { useSelector, useDispatch } from 'react-redux'
 import MuiTextField from '@material-ui/core/TextField'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -58,8 +55,6 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const classes = useStyles();
   
-  const [ password, setPassword] = React.useState('')
-  const [ cfmPassword, setCfmPassword ] = React.useState('')
   const [ error, setError ] = React.useState(false)
   const [ errorMessage, setErrorMessage ] = React.useState('')
   const [ success, setSeccess ] = React.useState(false)

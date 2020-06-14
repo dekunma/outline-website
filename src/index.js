@@ -27,7 +27,6 @@ import { Provider } from 'react-redux'
 
 // core components
 import Admin from "layouts/Admin.js";
-import RTL from "layouts/RTL.js";
 import SignIn from "views/SignIn/SignIn"
 import SignUp from 'views/SignUp/SignUp2'
 import "assets/css/material-dashboard-react.css?v=1.8.0";

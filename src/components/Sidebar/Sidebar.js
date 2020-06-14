@@ -11,16 +11,21 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
-// core components
-import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
-import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
+
+import Button from '../CustomButtons/Button'
+
+import { useDispatch } from 'react-redux'
+import { setLogin } from '../../actions'
 
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
   const classes = useStyles();
+
+  const dispatch = useDispatch()
+
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
@@ -93,23 +98,19 @@ export default function Sidebar(props) {
           variant="temporary"
           anchor="left"
           open={props.open}
-          // classes={{
-          //   paper: classNames(classes.drawerPaper, {
-          //     [classes.drawerPaperRTL]: props.rtlActive
-          //   })
-          // }}
           onClose={props.handleDrawerToggle}
           ModalProps={{
             keepMounted: true // Better open performance on mobile.
           }}
         >
           {brand}
-         {/* <div className={classes.sidebarWrapper}>
-            {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
-            {links}
-          </div>  */}
           <div className={classes.sidebarWrapper}>
             {links}
+            <Button 
+                color="danger"
+                onClick={ev => dispatch(setLogin(false, null, null))}
+                style={{marginLeft:'80px', marginTop:'20px'}}
+              >LOG OUT</Button>
           </div>
           {image !== undefined ? (
             <div

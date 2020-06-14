@@ -6,7 +6,6 @@ import {
   primaryColor,
   primaryBoxShadow,
   infoColor,
-  successColor,
   warningColor,
   dangerColor,
   whiteColor,

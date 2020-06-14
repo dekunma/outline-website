@@ -24,13 +24,14 @@ import client from '../../feathers'
 import Button from '../../components/CustomButtons/Button'
 import { useSelector } from 'react-redux'
 import clipboard from 'clipboard-polyfill'
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
 
-  const [announcement, setAnnouncement] = React.useState('loading')
+  const [announcement, setAnnouncement] = React.useState('')
   const [buttonDisabled, setButtonDisabled] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
   const [successMessage, setSuccessMessage] = React.useState('')
@@ -59,7 +60,6 @@ export default function Dashboard() {
     setInfo(true)
     setInfoMessage('Getting the accesskeys...')
     setButtonDisabled(true)
-    let count = 0
     // servers.map(s => {
       //get new accesskey throw proxy
     client.service('proxy/new-key')
@@ -125,7 +125,12 @@ export default function Dashboard() {
               </p>
             </CardHeader>
             <CardBody>
-              {renderHTML(announcement)}
+              {announcement !== ''
+                ? //if loading finished
+                  renderHTML(announcement)
+                : //if loading
+                  <Skeleton/>
+              }
             </CardBody>
           </Card>
         </GridItem>
@@ -142,34 +147,45 @@ export default function Dashboard() {
                 </CardIcon>
 
                 <p style={{fontSize:'2em'}} className={classes.cardCategory}>{s.name}</p>
-                {s.accessKey !== null && s.accessKey !== undefined
-                ? //if user has access key
-                  <div>
-                    {/* <p style={{color:'black'}}>Access key: </p> */}
-                    <Primary>Access Key: </Primary>
-                    <Quote text={s.accessKey}/>
-                  </div>
-                
-                : //if user does not have access key
-                  <div>
-                    <p>note</p>
-                    <Quote text='Please click the button below to get an acess key for VPN' />
-                  </div>
-                  
+                {s.accessKey !== undefined
+                ? //if loading finished
+                  s.accessKey !== null
+                    ? //if user has access key
+                      <div>
+                        {/* <p style={{color:'black'}}>Access key: </p> */}
+                        <Primary>Access Key: </Primary>
+                        <Quote text={s.accessKey}/>
+                      </div>
+                    
+                    : //if user does not have access key
+                      <div>
+                        <p>note</p>
+                        <Quote text='Please click the button below to get an acess key for VPN' />
+                      </div>
+                : //if loading
+                <div>
+                  <p>loadinga</p>
+                  <Skeleton/>
+                  <Skeleton/>
+                </div>
                 }
+                
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
+                  {s.accessKey !== undefined
+                  ? //if loading finished
+                    s.accessKey !== null
+                      ? //if user has access key
+                        <Button color='primary' onClick={ev => copyKey(s.accessKey)}>Copy Key</Button>
+                      : //if user does not have access key
+                        //check if the user has clicked the button
+                        buttonDisabled
+                        ? <Button disabled>Getting Key...</Button>
+                        : <Button color='primary' onClick={ev => getNewAccessKey(s.URL)}>Get key</Button>
+                  :// if still loading
+                    <div/>}
                   
-                  {s.accessKey !== null
-                  ? //if user has access key
-                    <Button color='primary' onClick={ev => copyKey(s.accessKey)}>Copy Key</Button>
-                  : //if user does not have access key
-                    //check if the user has clicked the button
-                    buttonDisabled
-                    ? <Button disabled>Getting Key...</Button>
-                    : <Button color='primary' onClick={ev => getNewAccessKey(s.URL)}>Get key</Button>
-                  }
 
                 </div>
               </CardFooter>
