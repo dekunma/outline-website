@@ -163,7 +163,7 @@ export default function(){
 										Sign In
 									</Button>
 								</div>								
-								<Link color="textPrimary" href="/reset-password">Forget Password?</Link>
+								{/* <Link color="textPrimary" href="/reset-password">Forget Password?</Link> */}
 								<div>
 									<Link href="/sign-up">No account? Sign Up Now</Link>
 								</div>

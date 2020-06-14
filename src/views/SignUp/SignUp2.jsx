@@ -56,10 +56,12 @@ class SignUp extends React.Component{
           }
 		}
 		
-		updateField(name, ev) {
+	updateField(name, ev) {
       const regex  = /@7debate.club/
       if(name === 'email'){
-        if(!regex.test(ev.target.value)){
+        if(!regex.test(this.state.email)){
+					console.log('up')
+					console.log(ev.target.value)
           this.setState({errorMessage:"Please use a 7Debate email", error:true, [name]: ev.target.value})
           return
         }
@@ -84,13 +86,17 @@ class SignUp extends React.Component{
   
     signup = () => {
       const { email, password, cfmPassword, name } = this.state;
-      const regex  = /@7debate.club/
+	  	const regex  = /@7debate.club/
       if(!regex.test(email)){
+					console.log('sign')
+					console.log(email)
           this.setState({error:true, errorMessage:"Please use a 7Debate email"})
           return;
       }
       
       if(!(password === cfmPassword)){
+				console.log('pw ', password)
+				console.log('cpw ', cfmPassword)
         this.setState({error:true,errorMessage:"The Two Passwords You Entered are not Identical"})
         return;
       }
@@ -98,11 +104,13 @@ class SignUp extends React.Component{
       if(this.state.verificationCode !== this.state.code){
         this.setState({error:true,errorMessage:'wrong verification code'})
         return;
-      }
+			}
+			
       client.service('users')
         .create({ email, password, name })
         .then(r => this.login())
-        .catch(error => this.setState({error}))
+				// .catch(e => this.setState({error: true}))
+				.catch(e => this.setState({error:true, errorMessage:e.message}))
     }
 
     onKeyup = (e) => {
