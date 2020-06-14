@@ -30,6 +30,13 @@ export default function Sidebar(props) {
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
+
+  const logout = () => {
+    localStorage.clear()
+    dispatch(setLogin(false, null, null))
+  }
+
+
   const { color, logo, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
@@ -108,8 +115,8 @@ export default function Sidebar(props) {
             {links}
             <Button 
                 color="danger"
-                onClick={ev => dispatch(setLogin(false, null, null))}
-                style={{marginLeft:'80px', marginTop:'20px'}}
+                onClick={ev => logout()}
+                style={{marginLeft:'16px', marginTop:'20px', width:'88%'}}
               >LOG OUT</Button>
           </div>
           {image !== undefined ? (
