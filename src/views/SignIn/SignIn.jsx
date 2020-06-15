@@ -68,6 +68,7 @@ const useStyles = makeStyles(styles);
 export default function(){
 	const classes = useStyles();
 	const [redirect, setRedirect] = React.useState(false)
+	const [buttonDisabled, setButtonDisabled] = React.useState(false)
 	const email = useSelector(state => state.email)
 	const password = useSelector(state => state.password)
 	const error = useSelector(state => state.error)
@@ -87,6 +88,7 @@ export default function(){
 	// }
 
 	const authenticate = () => {
+		setButtonDisabled(true)
 		client.authenticate({
 			email:email,
 			password:password,
@@ -98,6 +100,7 @@ export default function(){
 			setRedirect(true)
 		})
 		.catch(e => {
+			setButtonDisabled(false)
 			dispatch(setError(true,e.message))
 			setTimeout(() => {
 				dispatch(setError(false,e.message))
@@ -152,18 +155,30 @@ export default function(){
 									value={password}
 								/>
 								<div>
-									<Button 
-										color="primary" 
-										round 
-										className={classes.button}
-										onClick={authenticate}
-										//TODO: fix
-										// onKeyUp={ev => onKeyUp(ev)}
-									>
-										Sign In
+									{buttonDisabled
+									?
+										<Button 
+											disabled
+											round 
+											className={classes.button}
+										>
+										Signing In...
 									</Button>
+									:
+										<Button 
+											color="primary" 
+											round 
+											className={classes.button}
+											onClick={authenticate}
+											//TODO: fix
+											// onKeyUp={ev => onKeyUp(ev)}
+										>
+											Sign In
+										</Button>
+									}
+									
 								</div>								
-								{/* <Link color="textPrimary" href="/reset-password">Forget Password?</Link> */}
+								<Link color="textPrimary" href="/forget-password">Forget Your Password?</Link>
 								<div>
 									<Link href="/sign-up">No account? Sign Up Now</Link>
 								</div>

@@ -18,8 +18,6 @@ import CheckIcon from '@material-ui/icons/Check'
 
 import client from '../../feathers'
 
-import { useSelector } from 'react-redux'
-
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -41,18 +39,26 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function UserProfile() {
+export default function ResetPassword() {
   const classes = useStyles();
-  const login = useSelector(state => state.login)
   
   const [ password, setPassword] = React.useState('')
   const [ cfmPassword, setCfmPassword ] = React.useState('')
   const [ error, setError ] = React.useState(false)
   const [ errorMessage, setErrorMessage ] = React.useState('')
   const [ success, setSeccess ] = React.useState(false)
-  const [ successMessage, setSuccessMessage ] = React.useState('')
+	const [ successMessage, setSuccessMessage ] = React.useState('')
+	const [token, setToken] = React.useState('')
+	const [buttonDisabled, setButtonDisabled] = React.useState(false)
+	
+	React.useEffect(() => {
+		var url = new URL(window.location.href);
+		var token = url.searchParams.get("token");
+		setToken(token)
+	}, [])
 
   const updatePassword = () => {
+		setButtonDisabled(true)
     if(!password){
       setError(true)
       setErrorMessage('Please Enter Password')
@@ -70,25 +76,40 @@ export default function UserProfile() {
       setErrorMessage('The Two Passwords You Entered Are Not Identical')
       setTimeout(() => {setError(false)}, 3000)
       return
-    }
-    client.service('users')
-    .patch(login.userId, {password:password})
+		}
+		
+    client.service('authmanagement')
+    .create({
+			action:"resetPwdLong",
+			value: {
+				token:token,
+				password:password
+			}
+		})
     .then(r => {
-      setSeccess(true)
+			setSeccess(true)
+			setButtonDisabled(false)
       setSuccessMessage('Password Changed')
       setPassword('')
-      setCfmPassword('')
+			setCfmPassword('')
+			setTimeout(() => {
+				window.location='/'
+			}, 3000)
+
     })
     .catch(e => {
-      setError(true)
+			setError(true)
+			setButtonDisabled(false)
       setErrorMessage(e.message)
     })
     setTimeout(() => setSeccess(false),2500)    
   }
 
   return (
-    <div>
-      <SnackBar
+    <GridContainer>
+    <GridItem xs={1} md={4} />
+    <GridItem xs={10} md={4}>
+    	<SnackBar
         place="bl"
         color="danger"
         icon={ErrorIcon}
@@ -106,54 +127,54 @@ export default function UserProfile() {
         closeNotification={() => setSeccess(false)}
         close
       />
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+      
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Change Your Account Setting</p>
+              <h4 className={classes.cardTitleWhite}>Reset Password</h4>
+              <p className={classes.cardCategoryWhite}>Please Enter Your New Password</p>
             </CardHeader>
             <CardBody>
-                  <CustomInput
-                    labelText={login.email}
-                    id="company-disabled"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: true
-                    }}
-                  />
-                  <CustomInput
-                    labelText="New Password"
-                    id="password"
-                    formControlProps={{
-                        fullWidth: true
-                    }}
-                    type='password'
-                    onChange={ev => setPassword(ev.target.value)}
-                    value={password}
-                  />
-                  <CustomInput
-                    labelText="Confirm New Password"
-                    id="cfmpassword"
-                    formControlProps={{
-                        fullWidth: true
-                    }}
-                    type='password'
-                    onChange={ev => setCfmPassword(ev.target.value)}
-                    value={cfmPassword}
-                  />
+							<CustomInput
+								labelText="New Password"
+								id="password"
+								formControlProps={{
+										fullWidth: true
+								}}
+								type='password'
+								onChange={ev => setPassword(ev.target.value)}
+								value={password}
+							/>
+							<CustomInput
+								labelText="Confirm New Password"
+								id="cfmpassword"
+								formControlProps={{
+										fullWidth: true
+								}}
+								type='password'
+								onChange={ev => setCfmPassword(ev.target.value)}
+								value={cfmPassword}
+							/>
             </CardBody>
             <CardFooter>
-              <Button 
-                color="primary"
-                onClick={ev => updatePassword()}
-              >Update Password</Button>
+							{buttonDisabled
+								?
+									<Button 
+										disabled
+									>Updating Password...</Button>
+								:
+									<Button 
+										color="primary"
+										onClick={ev => updatePassword()}
+									>Update Password</Button>
+							}
+              
             </CardFooter>
           </Card>
-        </GridItem>
-      </GridContainer>
-    </div>
+
+    </GridItem>
+
+		<GridItem xs={1} md={4} />
+
+    </GridContainer>
   );
 }
