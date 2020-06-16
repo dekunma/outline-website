@@ -59,9 +59,7 @@ class SignUp extends React.Component{
 	updateField(name, ev) {
       const regex  = /@7debate.club/
       if(name === 'email'){
-        if(!regex.test(this.state.email)){
-					console.log('up')
-					console.log(ev.target.value)
+        if(!regex.test(ev.target.value)){
           this.setState({errorMessage:"Please use a 7Debate email", error:true, [name]: ev.target.value})
           return
         }
