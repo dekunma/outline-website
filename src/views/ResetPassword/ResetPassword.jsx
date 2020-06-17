@@ -77,7 +77,7 @@ export default function ResetPassword() {
       setTimeout(() => {setError(false)}, 3000)
       return
 		}
-		
+    
     client.service('authmanagement')
     .create({
 			action:"resetPwdLong",
