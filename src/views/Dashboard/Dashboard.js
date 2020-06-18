@@ -58,7 +58,7 @@ export default function Dashboard() {
   
   const getNewAccessKey = (URL) => {
     setInfo(true)
-    setInfoMessage('Getting the accesskeys...')
+    setInfoMessage('Getting your access key...')
     setButtonDisabled(true)
     // servers.map(s => {
       //get new accesskey throw proxy
