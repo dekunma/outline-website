@@ -77,7 +77,7 @@ export default function Status() {
           <CardBody>
             <Table
               tableHeaderColor="primary"
-              tableHead={["id", "Country", "Version", "Status", "Note"]}
+              tableHead={["id", "Location", "Version", "Status", "Note"]}
               tableData={tableData}
             />
           </CardBody>

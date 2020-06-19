@@ -67,7 +67,7 @@ export default function Tutorial() {
             <CardBody>
 							<h4>1. 在 <a href='/console/dashboard'>"Dashboard"</a> 里 "Get Key"或者"Copy Key"</h4>
 							<img src={tutorial_1} style={{width:'100%'}} alt="get key and copy key"/>
-							<h4>国内翻墙复制除了China之外的任意一个，国外访问网易云等复制China那个</h4>
+							<h4>右上角的名字指的是服务器的所在地。国内翻墙复制除了China之外的任意一个，国外想B站看番或者网易云下歌复制China那个</h4>
 
 							<Divider/>
 
