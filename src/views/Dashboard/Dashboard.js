@@ -43,7 +43,6 @@ export default function Dashboard() {
   const login = useSelector(state => state.login)
 
   React.useEffect(() => {
-    console.log(login)
     //get new announcement
     client.service('announcements')
     .find({query:{
