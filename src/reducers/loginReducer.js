@@ -4,7 +4,8 @@ const loginReducer = (state = '', action) => {
             return ({
                 value    :  action.value,
                 userId   :  action.userId,
-                email    :  action.email
+                email    :  action.email,
+                vip      :  action.vip
             })
         default:
             return state

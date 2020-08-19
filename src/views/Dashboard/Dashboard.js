@@ -16,6 +16,7 @@ import Primary from '../../components/Typography/Primary'
 import CheckIcon from '@material-ui/icons/Check'
 import SnackBar from '../../components/Snackbar/Snackbar'
 import InfoIcon from '@material-ui/icons/Info';
+import VipCard from '../../components/VipCard/VipCard'
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
@@ -42,6 +43,7 @@ export default function Dashboard() {
   const login = useSelector(state => state.login)
 
   React.useEffect(() => {
+    console.log(login)
     //get new announcement
     client.service('announcements')
     .find({query:{
@@ -138,6 +140,16 @@ export default function Dashboard() {
       </GridContainer>
 
       <GridContainer>
+        
+          
+          {login.vip
+          ? 
+            <GridItem xs={12} sm={6} md={6}>
+              <VipCard />
+            </GridItem>
+
+          : <React.Fragment/>}
+          
         {servers.map(s => (
           <GridItem xs={12} sm={6} md={6}>
             <Card>
@@ -154,7 +166,7 @@ export default function Dashboard() {
                       <div>
                         {/* <p style={{color:'black'}}>Access key: </p> */}
                         <Primary>Access Key: </Primary>
-                        <Quote text={s.accessKey}/>
+                        <Quote text={s.accessKey + "#" + s.name}/>
                       </div>
                     
                     : //if user does not have access key
@@ -164,7 +176,7 @@ export default function Dashboard() {
                       </div>
                 : //if loading
                 <div>
-                  <p>loadinga</p>
+                  <p>loading</p>
                   <Skeleton/>
                   <Skeleton/>
                 </div>
@@ -177,7 +189,7 @@ export default function Dashboard() {
                   ? //if loading finished
                     s.accessKey !== null
                       ? //if user has access key
-                        <Button color='primary' onClick={ev => copyKey(s.accessKey)}>Copy Key</Button>
+                        <Button color='primary' onClick={ev => copyKey(s.accessKey + "#" + s.name)}>Copy Key</Button>
                       : //if user does not have access key
                         //check if the user has clicked the button
                         buttonDisabled

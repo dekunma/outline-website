@@ -12,7 +12,7 @@ export default function Warning(props) {
   const { children } = props;
   return (
     <div className={classes.defaultFontStyle + " " + classes.warningText}>
-      {children}
+      <p>{children}</p>
     </div>
   );
 }

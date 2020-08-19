@@ -27,12 +27,13 @@ export const setError = (value, message) => {
     })
 }
 
-export const setLogin = (value, userId,email) => {
+export const setLogin = (value, userId, email, vip) => {
     return({
         type    :  "LOGIN",
         value   :   value,
         userId  :   userId,
-        email   :   email
+        email   :   email,
+        vip     :   vip
     })
 }
 

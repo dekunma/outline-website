@@ -69,7 +69,8 @@ export default function Admin({ ...rest }) {
     client.authenticate()
     .then(r => {
       const userEmail = r.user.email
-      dispatch(setLogin(true,r.user._id, userEmail))
+      const vipState = r.user.vip ? true : false
+      dispatch(setLogin(true,r.user._id, userEmail, vipState))
       setLoading(false)
 
       //get server status
