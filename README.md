@@ -11,4 +11,4 @@ Based on the Template of Material Dashboard React by Creative Tim.
 
 ## Licensing
 
-- Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
+- Licensed under MIT
