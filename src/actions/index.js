@@ -44,3 +44,17 @@ export const setServers = (value) => {
     })
 }
 
+export const setAnnouncement = (value) => {
+    return({
+        type    :   "ANNOUNCEMENT",
+        value   :   value
+    })
+}
+
+export const setVipServers = (value) => {
+    return({
+        type    :   "VIPSERVERS",
+        value   :   value
+    })
+}
+

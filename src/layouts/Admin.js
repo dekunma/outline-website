@@ -19,7 +19,7 @@ import logo from "assets/img/outline-logo.png";
 import client from '../feathers'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setLogin, setServers } from '../actions'
+import { setLogin, setServers, setAnnouncement, setVipServers } from '../actions'
 
 import Loading from '../views/Loading/Loading'
 
@@ -72,6 +72,26 @@ export default function Admin({ ...rest }) {
       const vipState = r.user.vip ? true : false
       dispatch(setLogin(true,r.user._id, userEmail, vipState))
       setLoading(false)
+
+      //get vip servers
+      client.service('vip')
+      .find()
+      .then(r => {
+          const data = r.data
+          dispatch(setVipServers(data))
+      })
+
+      //get announcement
+      client.service('announcements')
+      .find({query:{
+        $limit:1, 
+        $sort: {
+          createdAt: -1
+        }
+      }})
+      .then(r => {
+        dispatch(setAnnouncement(r.data[0].content))
+      })
 
       //get server status
       client.service('servers')

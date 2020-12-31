@@ -14,31 +14,19 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import CheckIcon from '@material-ui/icons/Check'
 import SnackBar from '../../components/Snackbar/Snackbar'
 
-import client from '../../feathers'
 import clipboard from 'clipboard-polyfill'
 
 //styles
 import styles from '../../assets/jss/material-dashboard-react/components/vipCardStyle'
+
 const useStyles = makeStyles(styles)
 
-export default function VipCard() {
+export default function VipCard(props) {
 
     const classes = useStyles()
 
-    const [ loading, setLoading ] = React.useState(true)
     const [ success, setSuccess ] = React.useState(false)
     const [ successMessage, setSuccessMessage ] = React.useState('')
-    const [ data, setData ] = React.useState({})
-
-    React.useEffect(() => {
-        client.service('vip')
-        .find()
-        .then(r => {
-            const data = r.data[0]
-            setLoading(false)
-            setData(data)
-        })
-    }, [])
 
     const copyKey = (key) => {
         setSuccess(true)
@@ -65,8 +53,8 @@ export default function VipCard() {
                 <StarIcon fontSize="large"/>
             </CardIcon>
 
-            <p style={{fontSize:'2em'}} className={classes.cardCategory}>{data.name}</p>
-            {loading
+            <p style={{fontSize:'2em'}} className={classes.cardCategory}>{props.name}</p>
+            {props.name === ''
             ? //if loading 
                 <div>
                     <p style={{fontSize:'2em'}} className={classes.cardCategory}>loading</p>
@@ -77,16 +65,16 @@ export default function VipCard() {
             : //if loading finished
             <div>
                 <Warning color="warning">Access Key: </Warning>
-                <Quote text={data.URL + "#" + data.name}/>
+                <Quote text={props.URL + "#" + props.name}/>
             </div>
             }
             
             </CardHeader>
             <CardFooter stats>
 
-                {loading
+                {props.name === ''
                 ? <div />
-                : <Button color='warning' onClick={ev => copyKey(data.URL + "#" + data.name)}>Copy Key</Button>
+                : <Button color='warning' onClick={ev => copyKey(props.URL + "#" + props.name)}>Copy Key</Button>
                 }
             </CardFooter>
         </Card>
