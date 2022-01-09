@@ -57,13 +57,13 @@ class SignUp extends React.Component{
 		}
 		
 	updateField(name, ev) {
-      const regex  = /@7debate.club/
-      if(name === 'email'){
-        if(!regex.test(ev.target.value)){
-          this.setState({errorMessage:"Please use a 7Debate email", error:true, [name]: ev.target.value})
-          return
-        }
-      }
+    //   const regex  = /@7debate.club/
+    //   if(name === 'email'){
+    //     if(!regex.test(ev.target.value)){
+    //       this.setState({errorMessage:"Please use a 7Debate email", error:true, [name]: ev.target.value})
+    //       return
+    //     }
+    //   }
       this.setState({ [name]: ev.target.value, error:false });
     }
 
@@ -84,13 +84,13 @@ class SignUp extends React.Component{
   
     signup = () => {
       const { email, password, cfmPassword, name } = this.state;
-	  	const regex  = /@7debate.club/
-      if(!regex.test(email)){
-					console.log('sign')
-					console.log(email)
-          this.setState({error:true, errorMessage:"Please use a 7Debate email"})
-          return;
-      }
+	//   	const regex  = /@7debate.club/
+    //   if(!regex.test(email)){
+	// 				console.log('sign')
+	// 				console.log(email)
+    //       this.setState({error:true, errorMessage:"Please use a 7Debate email"})
+    //       return;
+    //   }
       
       if(!(password === cfmPassword)){
 				console.log('pw ', password)
